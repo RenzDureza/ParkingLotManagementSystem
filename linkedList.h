@@ -24,7 +24,7 @@ class LinkedList {
     void findPos(string licensePlate, int &row, int &col);
 };
 
-
+// adds license plate to the list and their position
 void LinkedList::add(string licensePlate, int row, int col){
     Node *newNode, *nodePtr;
 
@@ -44,6 +44,7 @@ void LinkedList::add(string licensePlate, int row, int col){
     }
 }
 
+// removes license plate from the list and returning their position as row and column
 void LinkedList::remove(string licensePlate, int &row, int &col){    
     Node *prevNode, *nodePtr;
     
@@ -64,6 +65,7 @@ void LinkedList::remove(string licensePlate, int &row, int &col){
     }
 }
 
+// checks if the inputted license plate exist in the list
 bool LinkedList::exist(string licensePlate){
     Node *nodePtr;
 
@@ -77,6 +79,7 @@ bool LinkedList::exist(string licensePlate){
     return false;
 }
 
+// a function that uses the position to find a license plate from the list and retrieve its license plate
 void LinkedList::findspot(string &licensePlate, int row, int col){
     Node *nodePtr;
 
@@ -91,6 +94,7 @@ void LinkedList::findspot(string &licensePlate, int row, int col){
     return;
 }
 
+// Finds the position of a license plate using the inputted position
 void LinkedList::findPos(string licensePlate, int &row, int &col) {
     Node *nodePtr;
     nodePtr = head;

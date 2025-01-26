@@ -13,8 +13,9 @@ class Queue {
     ~Queue();
     bool isLineEmpty();
     bool isLineFull();
-    void addLine(const string &licensePlate);
+    void addLine(const string &licensePlate, int &qnum);
     string removeLine();
+    bool exist(string licensePlate);
 };    
 
 Queue::Queue(int queueSize){
@@ -29,30 +30,34 @@ Queue::~Queue() {
     delete[] waitingLine;
 }
 
-// Functions pang check if the waiting line is empty or full na
+//Check if queue is empty by returning true if size is 0.
 bool Queue::isLineEmpty() {
     if (size) return false;
     else return true;
 }
 
+//Checks if line is full by returning true if queue size is equal to maxsize.
 bool Queue::isLineFull() {
     if (size < maxSize) return false;
     else return true;
 }
 
-// Memang makeshift Enqueue
-void Queue::addLine(const string &licensePlate) {
+//Adds vehicle to queue while also returning license plate and queue number for updating logs.
+void Queue::addLine(const string &licensePlate, int &qnum) {
     if (isLineFull()) {
         cout << "| Queue line is full. Cannot add more vehicles.\n";
-    } else {
+        return;
+    }
+    else {
         rear = (rear + 1) % maxSize;
         waitingLine[rear] = licensePlate;
         size++;
-        cout << "| Vehicle <" << licensePlate << "> added to the waiting line queue #" << size << endl;
+        qnum = size;
+        return;
     }
 }
 
-// Memang makeshift Dequeue 
+//Removes vehicle from queue and returns the license plate of the removed vehicle.
 string Queue::removeLine() {
     string licensePlate;
     if (isLineEmpty()) {
@@ -65,4 +70,15 @@ string Queue::removeLine() {
     return licensePlate;
 }
 
-
+//Checks if license plate exists within the queue for duplicates.
+bool Queue::exist(string licensePlate){
+    if (isLineEmpty()) {
+        return false; 
+    }
+    for (int i = front; i < size; i++){
+        if (waitingLine[i] == licensePlate){
+            return true;
+        }
+    }
+    return false;
+}
