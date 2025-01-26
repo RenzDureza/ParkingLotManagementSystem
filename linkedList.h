@@ -21,6 +21,7 @@ public:
     void remove(string licensePlate, int &row, int &col);
     bool exist(string licensePlate);
     void findspot(string licensePlate);
+    void findPos(string licensePlate);
 };
 
 
@@ -75,3 +76,19 @@ bool LinkedList::exist(string licensePlate){
     }
     return false;
 }
+
+void LinkedList::findPos(string licensePlate) {
+    Node *nodePtr;
+    nodePtr = head;
+    if (exist(licensePlate)) {
+        while (nodePtr) {
+            if (nodePtr->licensePlate == licensePlate) {
+                cout << "License Plate: " << licensePlate << " is on space "<< nodePtr->row << ", " << nodePtr->col << endl;
+                return;
+            }
+            nodePtr = nodePtr->next;
+        }
+    } else {
+        cout << "No vehicle with license plate: " << licensePlate << " is parked\n"; 
+    }    
+}   

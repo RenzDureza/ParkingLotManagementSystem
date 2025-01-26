@@ -37,7 +37,7 @@ bool findNearestSpot(int &row, int &col) {
         vacantSpot.pop(row, col);
         return true;
     }
-    
+
     for (int i = 0; i < maxRow; i++) {
         if (i % 2 == 0){
             for (int j = 0; j < maxCol; j++) {
@@ -141,7 +141,10 @@ int main() {
         cout << "1. Park Vehicle\n"; 
         cout << "2. Retrieve Vehicle\n";  //Done
         cout << "3. Display Parking Lot\n"; //Done 
-        cout << "4. Exit\n";
+        cout << "4. Search Vehicle\n";
+        cout << "5. Display Spot\n";
+        cout << "6. Show Vacant Spot\n";
+        cout << "0. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -161,12 +164,17 @@ int main() {
                 displayParkingLot(); 
                 break;
             case 4:
-                cout << "Exiting system. Thank you for using this system!\n";
+                cout << "Enter the license plate of the vehicle: ";
+                cin >> licensePlate;
+                licenseList.findPos(licensePlate);
                 break;
+            case 0:
+                cout << "Thank you for using our system\n";
+                return 0;
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 4);
+    } while (choice != 0);
 
     return 0;
 }
