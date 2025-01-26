@@ -30,11 +30,11 @@ class Queue {
 
     // Functions pang check if the waiting line is empty or full na
     bool Queue::isLineEmpty() {
-        return front == -1 || front > rear;
+        return size == 0;
     }
 
     bool Queue::isLineFull() {
-        return rear == maxSize - 1;
+        return size == maxSize;
     }
 
     // Memang makeshift Enqueue

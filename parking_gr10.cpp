@@ -2,15 +2,17 @@
 #include <fstream>
 #include "linkedList.h"
 #include "queue.h"
+#include "stack.h"
 
 using namespace std;
 
 // Constants na palitan nalang if mas malaki
-const int maxRow = 5;
-const int maxCol = 5;
+const int maxRow = 2;
+const int maxCol = 2;
 const int maxQueue = 5;
 LinkedList licenseList;
 Queue waitingLine(maxQueue);
+Stack vacantSpot;
 
 // Global Data Structures para mas madaling maaccess
 char parkingLot[maxRow][maxCol];          // 2D array 
@@ -31,6 +33,11 @@ void initializeParkingLot() {
 
 //traversal while checking if index in matrix is full or not (E  or  P)
 bool findNearestSpot(int &row, int &col) {
+    if (!vacantSpot.isEmpty()) {
+        vacantSpot.pop(row, col);
+        return true;
+    }
+    
     for (int i = 0; i < maxRow; i++) {
         if (i % 2 == 0){
             for (int j = 0; j < maxCol; j++) {
@@ -86,6 +93,7 @@ void retrieveVehicle(const string &licensePlate) {
     int row, col;
     if (licenseList.exist(licensePlate)) {
         licenseList.remove(licensePlate, row, col);
+        vacantSpot.push(row, col);
         parkingLot[row][col] = 'E';
         cout << "Vehicle " + licensePlate + " left at (" + to_string(row) + ", " + to_string(col) + ")\n";
 
@@ -146,7 +154,8 @@ int main() {
             case 2:
                 cout << "Enter the license plate of the vehicle: ";
                 cin >> licensePlate;
-                retrieveVehicle(licensePlate); 
+                retrieveVehicle(licensePlate);
+                vacantSpot.display(); 
                 break;
             case 3:
                 displayParkingLot(); 
