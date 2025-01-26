@@ -6,8 +6,8 @@
 using namespace std;
 
 // Constants na palitan nalang if mas malaki
-const int maxRow = 2;
-const int maxCol = 2;
+const int maxRow = 5;
+const int maxCol = 5;
 const int maxQueue = 5;
 LinkedList licenseList;
 Queue waitingLine(maxQueue);
@@ -104,12 +104,19 @@ void retrieveVehicle(const string &licensePlate) {
 
 
 void displayParkingLot() {
+    cout << "    ";
+    for (char c = 'A'; c < 'A' + maxCol; ++c) {
+        cout << c << "    ";
+    }
+    cout << endl;
+
     for (int i = 0; i < maxRow; i++) {
-        cout << "| ";
+        
+        cout << i << " ";
         for (int j = 0; j < maxCol; j++) {
             cout << "[ " << parkingLot[i][j] << " ]";    
         }
-        cout << " |" << endl;
+        cout << endl;
     }
 }
 

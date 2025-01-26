@@ -46,6 +46,7 @@ class Queue {
                 front = 0;
             }
             waitingLine[++rear] = licensePlate;
+            size++;
             cout << "rear:" << rear;
             cout << "Vehicle " << licensePlate << " added to the waiting line.\n";
         }
@@ -58,6 +59,7 @@ class Queue {
             return ""; 
         }
         string licensePlate = waitingLine[front++];
+        size--;
         if (front > rear) { 
             front = -1;
             rear = -1;
