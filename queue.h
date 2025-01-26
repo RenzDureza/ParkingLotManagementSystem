@@ -15,56 +15,54 @@ class Queue {
     bool isLineFull();
     void addLine(const string &licensePlate);
     string removeLine();
-    };    
+};    
 
-    Queue::Queue(int maxSize){
-        waitingLine = new string[maxSize];
-        front = -1;
-        rear = -1;
-        size = 0;
-    }
+Queue::Queue(int queueSize){
+    waitingLine = new string[queueSize];
+    front = -1;
+    rear = -1;
+    size = 0;
+    maxSize = queueSize;
+}
 
-    Queue::~Queue() {
-        delete[] waitingLine;
-    }
+Queue::~Queue() {
+    delete[] waitingLine;
+}
 
-    // Functions pang check if the waiting line is empty or full na
-    bool Queue::isLineEmpty() {
-        return size == 0;
-    }
+// Functions pang check if the waiting line is empty or full na
+bool Queue::isLineEmpty() {
+    if (size) return false;
+    else return true;
+}
 
-    bool Queue::isLineFull() {
-        return size == maxSize;
-    }
+bool Queue::isLineFull() {
+    if (size < maxSize) return false;
+    else return true;
+}
 
-    // Memang makeshift Enqueue
-    void Queue::addLine(const string &licensePlate) {
-        if (isLineFull()) {
-            cout << "Queue line is full. Cannot add more vehicles.\n";
-        } else {
-            if (front == -1) {
-                front = 0;
-            }
-            waitingLine[++rear] = licensePlate;
-            size++;
-            cout << "rear:" << rear;
-            cout << "Vehicle " << licensePlate << " added to the waiting line.\n";
-        }
+// Memang makeshift Enqueue
+void Queue::addLine(const string &licensePlate) {
+    if (isLineFull()) {
+        cout << "| Queue line is full. Cannot add more vehicles.\n";
+    } else {
+        rear = (rear + 1) % maxSize;
+        waitingLine[rear] = licensePlate;
+        size++;
+        cout << "| Vehicle <" << licensePlate << "> added to the waiting line queue #" << size << endl;
     }
+}
 
-    // Memang makeshift Dequeue 
-    string Queue::removeLine() {
-        if (isLineEmpty()) {
-            cout << "Queue line is empty.\n";
-            return ""; 
-        }
-        string licensePlate = waitingLine[front++];
-        size--;
-        if (front > rear) { 
-            front = -1;
-            rear = -1;
-        }
-        return licensePlate;
+// Memang makeshift Dequeue 
+string Queue::removeLine() {
+    string licensePlate;
+    if (isLineEmpty()) {
+        cout << "| Queue line is empty.\n";
+        return ""; 
     }
+    front = (front + 1) % maxSize;
+    licensePlate = waitingLine[front];
+    size--;
+    return licensePlate;
+}
 
 

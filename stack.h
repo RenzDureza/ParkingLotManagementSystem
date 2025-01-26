@@ -17,7 +17,7 @@ public:
     void push(int row, int col);
     void pop(int &row, int &col);
     bool isEmpty();
-    void display(int &row, int &col);
+    void display();
 };
 
 void Stack::push(int row, int col){
@@ -35,7 +35,7 @@ void Stack::push(int row, int col){
 
 void Stack::pop(int &row, int &col){
     if (isEmpty()) {
-        cout << "Parking lot is full\n";
+        cout << "| Parking lot is full\n";
     } else {
         row = top->row;
         col = top->col;
@@ -58,16 +58,18 @@ bool Stack::isEmpty(){
     return status;
 }
 
-void Stack::display(int &row, int &col) {
+void Stack::display() {
     if (isEmpty()) {
-        cout << "Parking lot is full\n";
+        cout << "| Parking lot is full\n";
     } else {
         Node* nodePtr;
         nodePtr = top;
+        cout << "| Displaying all vacated spots in stack:\n";
+        cout << "| Top | ";
         while (nodePtr != nullptr) {
-            row = nodePtr->row;
-            col = nodePtr->col;
+            cout << char(nodePtr->col+65) << nodePtr->row+1 << " ";
             nodePtr = nodePtr->next;
         }
+        cout << "| Bottom \n";
     }
 }

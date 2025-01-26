@@ -4,7 +4,7 @@
 using namespace std;
 
 class LinkedList {
-public:
+    public:
     struct Node {
         string licensePlate;
         int row, col;
@@ -20,8 +20,8 @@ public:
     void add(string licensePlate, int row, int col);
     void remove(string licensePlate, int &row, int &col);
     bool exist(string licensePlate);
-    void findspot(string licensePlate);
-    void findPos(string licensePlate);
+    void findspot(string &licensePlate, int row, int col);
+    void findPos(string licensePlate, int &row, int &col);
 };
 
 
@@ -77,18 +77,34 @@ bool LinkedList::exist(string licensePlate){
     return false;
 }
 
-void LinkedList::findPos(string licensePlate) {
+void LinkedList::findspot(string &licensePlate, int row, int col){
+    Node *nodePtr;
+
+    nodePtr = head;
+    while (nodePtr) {
+        if (nodePtr->row == row && nodePtr->col == col) {
+            licensePlate = nodePtr->licensePlate;
+            return;
+        }
+        nodePtr = nodePtr->next;
+    }
+    return;
+}
+
+void LinkedList::findPos(string licensePlate, int &row, int &col) {
     Node *nodePtr;
     nodePtr = head;
     if (exist(licensePlate)) {
         while (nodePtr) {
             if (nodePtr->licensePlate == licensePlate) {
-                cout << "License Plate: " << licensePlate << " is on space "<< nodePtr->row << ", " << nodePtr->col << endl;
+                row = nodePtr->row;
+                col = nodePtr->col;
                 return;
             }
             nodePtr = nodePtr->next;
         }
-    } else {
-        cout << "No vehicle with license plate: " << licensePlate << " is parked\n"; 
-    }    
-}   
+    }
+    row = -1;
+    col = -1;
+    return; 
+}    
