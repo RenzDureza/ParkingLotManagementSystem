@@ -7,8 +7,8 @@
 using namespace std;
 
 // Constants to change
-const int maxRow = 2;
-const int maxCol = 2;
+const int maxRow = 5;
+const int maxCol = 5;
 const int maxQueue = 5;
 
 //Initialization of Data Structures
@@ -241,7 +241,7 @@ void retrieveVehicle(const string &licensePlate) {
 //Display Parking Lot Array
 void displayParkingLot() {
     //Dispalys Column and Row Labels
-    cout << "    ";
+    cout << "|     ";
     for (char c = 'A'; c < 'A' + maxCol; ++c) {
         cout << c << "    ";
     }
@@ -249,7 +249,7 @@ void displayParkingLot() {
 
     //Displays all parking lot spaces whether if it is E for Empty and P for Parked
     for (int i = 0; i < maxRow; i++) {
-        cout << i + 1 << " ";
+        cout << "| " << i + 1 << " ";
         for (int j = 0; j < maxCol; j++) {
             cout << "[ " << parkingLot[i][j] << " ]";    
         }
@@ -264,6 +264,10 @@ void displaySpot(string spot){
     string licensePlate;
     row = spot[1] - 49;
     col = spot[0] - 65;
+    if (row > maxRow || col > maxCol || row < 0 || col < 0){
+        cout << "| Invalid Spot.\n"; 
+        return;
+    }
     licenseList.findspot(licensePlate, row, col);
     if (licensePlate == "") {
         cout << "| Spot (" << spot << ") is vacant. " << endl;
@@ -282,7 +286,7 @@ void searchVehicle(string licensePlate){
         cout << "| No vehicle with license plate <" << licensePlate << "> is parked\n";
         return;
     }
-    cout << "| Vehicle <" << licensePlate << "> is on spot ()"<< char(col+65) << row+1 << ")" << endl;
+    cout << "| Vehicle <" << licensePlate << "> is on spot ("<< char(col+65) << row+1 << ")" << endl;
     return;
 }
 
