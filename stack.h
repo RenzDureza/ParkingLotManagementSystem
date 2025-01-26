@@ -11,22 +11,45 @@ public:
     Node* top;
 
     Stack() {
-        top = nullptr;
+        this->top = nullptr;
     }
 
-    void push();
+    void push(int row, int col);
     void pop();
     bool isEmpty();
 };
 
-void Stack::push(){
-    // TODO
+void Stack::push(int row, int col){
+    Node* newNode = new Node;
+    newNode->row = row;
+    newNode->col = col;
+    if (isEmpty()) {
+       top = newNode;
+       newNode->next = nullptr;
+    } else {
+        newNode->next = top;
+        top = newNode;
+    }
 }
 
 void Stack::pop(){
-    // TODO
+    if (isEmpty()) {
+        cout << "Parking lot is full\n";
+    } else {
+        Node* temp = top;
+        top = top->next;
+        delete temp;
+    }
 }
 
 bool Stack::isEmpty(){
-    // TODO
+    bool status;
+
+    if (!top) {
+        status = true;
+    } else {
+        status = false;
+    }
+
+    return status;
 }

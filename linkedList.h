@@ -7,6 +7,7 @@ class LinkedList {
 public:
     struct Node {
         string licensePlate;
+        int row, col;
         struct Node *next;
     };
 
@@ -16,27 +17,44 @@ public:
         head = nullptr;
     }
 
-    void add(string licensePlate);
-    void remove(string licensePlate);
+    void add(string licensePlate, int row, int col);
+    void remove(string licensePlate, int &row, int &col);
     bool exist(string licensePlate);
+    void findspot(string licensePlate);
 };
 
 
-void LinkedList::add(string licensePlate){
-    Node *newNode = new Node;
+void LinkedList::add(string licensePlate, int row, int col){
+    Node *newNode, *nodePtr;
+
+    newNode = new Node;
     newNode->licensePlate = licensePlate;
-    newNode->next = head;
-    head = newNode;
+    newNode->row = row;
+    newNode->col = col;
+    newNode->next = NULL;
+
+    if (!head){
+        head = newNode;
+    }
+    else {
+        nodePtr = head;
+        while (nodePtr->next) nodePtr = nodePtr->next;
+        nodePtr->next = newNode;
+    }
 }
 
-void LinkedList::remove(string licensePlate){    
-    Node *nodePtr = head;
-    Node * prevNode = nullptr;
+void LinkedList::remove(string licensePlate, int &row, int &col){    
+    Node *prevNode, *nodePtr;
+    
+    nodePtr = head;
+    prevNode = nullptr;
     while (nodePtr != nullptr) {
         if (nodePtr->licensePlate == licensePlate) {
             if (prevNode == nullptr) {
                 head = nodePtr->next;
             }
+            row = nodePtr->row;
+            col = nodePtr->col;
             delete nodePtr;
             return;
         }
@@ -46,12 +64,14 @@ void LinkedList::remove(string licensePlate){
 }
 
 bool LinkedList::exist(string licensePlate){
-    Node* current = head;
-    while (current != nullptr) {
-        if (current->licensePlate == licensePlate) {
+    Node *nodePtr;
+
+    nodePtr = head;
+    while (nodePtr) {
+        if (nodePtr->licensePlate == licensePlate) {
             return true;
         }
-        current = current->next;
+        nodePtr = nodePtr->next;
     }
     return false;
 }
