@@ -128,6 +128,11 @@ void displayParkingLot() {
     }
 }
 
+void showVacantSpots() {
+    int row, col;
+    vacantSpot.display(row, col);
+}
+
 
 int main() {
     initializeParkingLot();
@@ -143,7 +148,7 @@ int main() {
         cout << "3. Display Parking Lot\n"; //Done 
         cout << "4. Search Vehicle\n";
         cout << "5. Display Spot\n";
-        cout << "6. Show Vacant Spot\n";
+        cout << "6. Show Vacant Spots\n";
         cout << "0. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
@@ -158,7 +163,6 @@ int main() {
                 cout << "Enter the license plate of the vehicle: ";
                 cin >> licensePlate;
                 retrieveVehicle(licensePlate);
-                vacantSpot.display(); 
                 break;
             case 3:
                 displayParkingLot(); 
