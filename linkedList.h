@@ -24,7 +24,7 @@ class LinkedList {
     void findPos(string licensePlate, int &row, int &col);
 };
 
-// adds license plate to the list and their position
+//Adds new node containing license plate, row , and column.
 void LinkedList::add(string licensePlate, int row, int col){
     Node *newNode, *nodePtr;
 
@@ -34,9 +34,11 @@ void LinkedList::add(string licensePlate, int row, int col){
     newNode->col = col;
     newNode->next = NULL;
 
+    //If linked list is empty, new node is the head;
     if (!head){
         head = newNode;
     }
+    //Iterates until the end of linked list, and adds the new node at the end.
     else {
         nodePtr = head;
         while (nodePtr->next) nodePtr = nodePtr->next;
@@ -44,13 +46,15 @@ void LinkedList::add(string licensePlate, int row, int col){
     }
 }
 
-// removes license plate from the list and returning their position as row and column
+//Removes a node from the linked list.
 void LinkedList::remove(string licensePlate, int &row, int &col){    
     Node *prevNode, *nodePtr;
     
     nodePtr = head;
     prevNode = nullptr;
+    //Iterates through all nodes
     while (nodePtr != nullptr) {
+        //Checks until license plate matches then deletes that node.
         if (nodePtr->licensePlate == licensePlate) {
             if (prevNode == nullptr) {
                 head = nodePtr->next;
@@ -60,12 +64,13 @@ void LinkedList::remove(string licensePlate, int &row, int &col){
             delete nodePtr;
             return;
         }
+        //Previous node points to node pointer while node pointer points to the next.
         prevNode = nodePtr;
         nodePtr = nodePtr->next;
     }
 }
 
-// checks if the inputted license plate exist in the list
+//Checks if the license plate exists inside the linked list
 bool LinkedList::exist(string licensePlate){
     Node *nodePtr;
 
@@ -79,11 +84,12 @@ bool LinkedList::exist(string licensePlate){
     return false;
 }
 
-// a function that uses the position to find a license plate from the list and retrieve its license plate
+//Takes the row and column then returns the License plate that vacates that spot.
 void LinkedList::findspot(string &licensePlate, int row, int col){
     Node *nodePtr;
 
     nodePtr = head;
+    //Iterates through the linked list until node matches the row and column spot.
     while (nodePtr) {
         if (nodePtr->row == row && nodePtr->col == col) {
             licensePlate = nodePtr->licensePlate;
@@ -94,10 +100,11 @@ void LinkedList::findspot(string &licensePlate, int row, int col){
     return;
 }
 
-// Finds the position of a license plate using the inputted position
+//Takes the license plate of a vehicle and returns the row and column where it is parked.
 void LinkedList::findPos(string licensePlate, int &row, int &col) {
     Node *nodePtr;
     nodePtr = head;
+    //Iterates through the linked list until node matches license plate.
     if (exist(licensePlate)) {
         while (nodePtr) {
             if (nodePtr->licensePlate == licensePlate) {
@@ -108,6 +115,7 @@ void LinkedList::findPos(string licensePlate, int &row, int &col) {
             nodePtr = nodePtr->next;
         }
     }
+    //Returns -1 for row and column if no vehicle with license plate is parked.
     row = -1;
     col = -1;
     return; 

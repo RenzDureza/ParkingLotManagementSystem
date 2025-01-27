@@ -45,15 +45,17 @@ int main() {
         cout << "| 1. Park Vehicle\n"; 
         cout << "| 2. Retrieve Vehicle\n";
         cout << "| 3. Display Parking Lot\n";
-        cout << "| 4. Search Vehicle with Plate number\n";
-        cout << "| 5. Display License Number with Spot \n";
+        cout << "| 4. Check a Spot (insert Spot)\n";
+        cout << "| 5. Search Vehicle (insert Plate number)\n";
         cout << "| 6. Show Vacant Spots\n";
         cout << "| 0. Exit\n";
         cout << "| Enter your choice: ";
         cin >> choice;
         //Cheks for valid input within the same data type, else it will prompt the user again to enter their choice.
-        if (invalidInput()) continue;
-        
+        if (invalidInput()) {
+            system("cls");
+            continue;
+        }
 
         switch (choice) {
             case 1:
@@ -82,18 +84,6 @@ int main() {
                 system("pause");
                 system("cls"); 
                 break;
-            case 4:
-                system("cls");
-                cout << "|-----------------------------------------------------------------";
-                cout << "\n|======================= Search a Vehicle ========================\n";
-       	        cout << "|-----------------------------------------------------------------\n";
-                cout << "| Enter the license plate of the vehicle: ";
-                cin >> licensePlate;
-                searchVehicle(licensePlate);
-                cout << "| ";
-                system("pause");
-                system("cls");
-                break;
             case 3:
                 system("cls");
                 cout << "|-----------------------------------------------------------------";
@@ -105,14 +95,27 @@ int main() {
                 system("pause");
                 system("cls"); 
                 break;
+            case 4:
+                system("cls");
+                cout << "|-----------------------------------------------------------------";
+                cout << "\n|========================= Check a Spot ==========================\n";
+       	        cout << "|-----------------------------------------------------------------\n";
+                displayParkingLot();
+                cout << "|\n| Enter the parking spot: ";
+                cin >> spot;
+                displaySpot(spot);
+                cout << "| ";
+                system("pause");
+                system("cls");
+                break;
             case 5:
                 system("cls");
                 cout << "|-----------------------------------------------------------------";
-                cout << "\n|========================= Display Spot ==========================\n";
+                cout << "\n|======================= Search a Vehicle ========================\n";
        	        cout << "|-----------------------------------------------------------------\n";
-                cout << "| Enter the parking spot: ";
-                cin >> spot;
-                displaySpot(spot);
+                cout << "| Enter the license plate of the vehicle: ";
+                cin >> licensePlate;
+                searchVehicle(licensePlate);
                 cout << "| ";
                 system("pause");
                 system("cls");
@@ -128,18 +131,17 @@ int main() {
                 system("cls");
                 break;
             case 0:
+                run = false;
                 system("cls");
                 cout << "|-----------------------------------------------------------------";
                 cout << "\n|=========================== Thank You ===========================\n";
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Exiting system. Thank you for using this system!\n";
                 cout << "| ";
-                run = false;
                 system("pause");
                 system("cls");
                 break;
             default:
-                run = false;
                 system("cls");
                 cout << "|-----------------------------------------------------------------";
                 cout << "\n|============================= ERROR =============================\n";
