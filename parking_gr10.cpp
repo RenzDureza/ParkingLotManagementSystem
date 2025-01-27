@@ -29,11 +29,14 @@ void displayParkingLot();
 void displaySpot(string spot);
 void searchVehicle(string licensePlate);
 void updateLog(string message);
+bool invalidInput();
+bool isValidLicense(string licensePlate);
 
 int main() {
     initializeParkingLot();
     int choice;
     string licensePlate, spot;
+    bool run = true;
 
     do {
     	cout << "|-----------------------------------------------------------------";
@@ -48,6 +51,8 @@ int main() {
         cout << "| 0. Exit\n";
         cout << "| Enter your choice: ";
         cin >> choice;
+        if (invalidInput()) continue;
+        
 
         switch (choice) {
             case 1:
@@ -57,6 +62,8 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Enter the license plate of the vehicle: ";
                 cin >> licensePlate;
+                //if (invalidInput()) continue;
+                if (!isValidLicense(licensePlate)) break;
                 parkVehicle(licensePlate);
                 cout << "| ";
                 system("pause");
@@ -69,6 +76,7 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Enter the license plate of the vehicle: ";
                 cin >> licensePlate;
+                if (invalidInput()) continue;
                 retrieveVehicle(licensePlate);
                 cout << "| ";
                 system("pause");
@@ -81,6 +89,7 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Enter the license plate of the vehicle: ";
                 cin >> licensePlate;
+                if (invalidInput()) break;
                 searchVehicle(licensePlate);
                 cout << "| ";
                 system("pause");
@@ -104,6 +113,7 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Enter the parking spot: ";
                 cin >> spot;
+                if (invalidInput()) continue;
                 displaySpot(spot);
                 cout << "| ";
                 system("pause");
@@ -126,10 +136,12 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Exiting system. Thank you for using this system!\n";
                 cout << "| ";
+                run = false;
                 system("pause");
                 system("cls");
                 break;
             default:
+                run = false;
                 system("cls");
                 cout << "|-----------------------------------------------------------------";
                 cout << "\n|============================= ERROR =============================\n";
@@ -140,7 +152,7 @@ int main() {
                 system("cls");
                 break;
         }
-    } while (choice != 0);
+    } while (run);
     return 0;
 }
 
@@ -240,7 +252,7 @@ void retrieveVehicle(const string &licensePlate) {
 
 //Display Parking Lot Array
 void displayParkingLot() {
-    //Dispalys Column and Row Labels
+    //Displays Column and Row Labels
     cout << "|     ";
     for (char c = 'A'; c < 'A' + maxCol; ++c) {
         cout << c << "    ";
@@ -262,8 +274,8 @@ void displayParkingLot() {
 void displaySpot(string spot){
     int row, col;
     string licensePlate;
-    row = spot[1] - 49;
     col = spot[0] - 65;
+    row = spot[1] - 49;
     if (row > maxRow || col > maxCol || row < 0 || col < 0){
         cout << "| Invalid Spot.\n"; 
         return;
@@ -298,4 +310,34 @@ void updateLog(string message){
         logFile << message;
         logFile.close();
     }
+}
+
+bool invalidInput(){
+    if (cin.fail()){
+        cin.clear();
+        char c;
+        while (cin.get(c) && c != '\n')
+        ;
+        cout << "| Invalid input. Please try again.\n";
+        return true;
+    }
+    return false;
+}
+
+bool isValidLicense(string licensePlate) {
+    if (licensePlate.length() > 6) {
+        cout << "| Invalid License Plate. Maximum of 6 Characters\n";
+        return false;
+    }
+    else{
+        for(int i = 0; i < licensePlate.length(); i++) {
+            //Checks each character's ascii value. Valid License plates are only between 0-9(48-57), A-Z (65-90), and a-z(97-112).
+            if (licensePlate[i] < 48 || (licensePlate[i] > 57 && licensePlate[i] < 65) || (licensePlate[i] > 90 && licensePlate[i] < 97) || licensePlate[i] > 122){
+                cout << "| Invalid character found.\n";
+                return false;
+                //Returns invalid license plate if a special character is found.
+            }
+        }
+    }
+    return true;
 }
