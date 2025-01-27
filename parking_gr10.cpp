@@ -276,7 +276,7 @@ void displaySpot(string spot){
     string licensePlate;
     col = spot[0] - 65;
     row = spot[1] - 49;
-    if (row > maxRow || col > maxCol || row < 0 || col < 0){
+    if (row < 0 || row >= maxRow || col < 0 || col >= maxCol){
         cout << "| Invalid Spot.\n"; 
         return;
     }
