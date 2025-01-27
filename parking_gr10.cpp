@@ -51,6 +51,7 @@ int main() {
         cout << "| 0. Exit\n";
         cout << "| Enter your choice: ";
         cin >> choice;
+        //Cheks for valid input within the same data type, else it will prompt the user again to enter their choice.
         if (invalidInput()) continue;
         
 
@@ -62,7 +63,7 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Enter the license plate of the vehicle: ";
                 cin >> licensePlate;
-                //if (invalidInput()) continue;
+                //Checks if license plate is valid, if not valid, case will break and the vehicle will not be parked.
                 if (!isValidLicense(licensePlate)) break;
                 parkVehicle(licensePlate);
                 cout << "| ";
@@ -76,7 +77,6 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Enter the license plate of the vehicle: ";
                 cin >> licensePlate;
-                if (invalidInput()) continue;
                 retrieveVehicle(licensePlate);
                 cout << "| ";
                 system("pause");
@@ -89,7 +89,6 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Enter the license plate of the vehicle: ";
                 cin >> licensePlate;
-                if (invalidInput()) break;
                 searchVehicle(licensePlate);
                 cout << "| ";
                 system("pause");
@@ -113,7 +112,6 @@ int main() {
        	        cout << "|-----------------------------------------------------------------\n";
                 cout << "| Enter the parking spot: ";
                 cin >> spot;
-                if (invalidInput()) continue;
                 displaySpot(spot);
                 cout << "| ";
                 system("pause");
@@ -312,6 +310,7 @@ void updateLog(string message){
     }
 }
 
+//Checks input if the user inputs a different data type, cin will fail and the system will remove each character and return true
 bool invalidInput(){
     if (cin.fail()){
         cin.clear();
@@ -324,6 +323,7 @@ bool invalidInput(){
     return false;
 }
 
+//Checks if the characters inside license plate string is valid containg only alphanumeric characters.
 bool isValidLicense(string licensePlate) {
     if (licensePlate.length() > 6) {
         cout << "| Invalid License Plate. Maximum of 6 Characters\n";
